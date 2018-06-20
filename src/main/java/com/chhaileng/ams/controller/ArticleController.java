@@ -21,8 +21,8 @@ import com.chhaileng.ams.entity.User;
 import com.chhaileng.ams.entity.Article;
 import com.chhaileng.ams.service.article.ArticleService;
 import com.chhaileng.ams.service.category.CategoryService;
+import com.chhaileng.ams.service.upload.FileUploadService;
 import com.chhaileng.ams.service.user.UserService;
-import com.chhaileng.article.service.upload.FileUploadService;
 
 @Controller
 public class ArticleController {
@@ -52,7 +52,7 @@ public class ArticleController {
 		m.addAttribute("categories", categoryService.findAll());
 		m.addAttribute("isAddPage", true);
 		m.addAttribute("article", new Article());
-		return "admin/add";
+		return "add";
 	}
 	
 	@PostMapping("/add")
@@ -61,7 +61,7 @@ public class ArticleController {
 			m.addAttribute("categories", categoryService.findAll());
 			m.addAttribute("isAddPage", true);
 			m.addAttribute("article", article);
-			return "admin/add";
+			return "add";
 		}
 		
 		User author = userService.findOne(1);
@@ -74,7 +74,7 @@ public class ArticleController {
 		return "redirect:/";
 	}
 	
-	@GetMapping(value = {"/delete", "/edit"})
+	@GetMapping(value = {"/delete", "/update"})
 	public String redirect() {
 		return "redirect:/";
 	}
@@ -85,22 +85,24 @@ public class ArticleController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/edit/{id}")
+	@GetMapping("/update/{id}")
 	public String edit(ModelMap m, @PathVariable("id") Integer id) {
 		m.addAttribute("categories", categoryService.findAll());
 		m.addAttribute("isAddPage", false);
 		m.addAttribute("article", articleService.findOne(id));
-		return "admin/add";
+		return "add";
 	}
 	
-	@PostMapping("/edit")
-	public String saveEdit(@RequestParam("image") MultipartFile file, @Valid @ModelAttribute("article") Article article, BindingResult result, ModelMap m) {
+	@PostMapping("/update")
+	public String saveUpdate(@RequestParam("image") MultipartFile file, @Valid @ModelAttribute("article") Article article, BindingResult result, ModelMap m) {
 		if (result.hasErrors()) {
 			m.addAttribute("categories", categoryService.findAll());
 			m.addAttribute("isAddPage", false);
 			m.addAttribute("article", article);
-			return "admin/add";
+			return "add";
 		}
+		
+		System.out.println(article);
 	
 		User author = userService.findOne(1);
 		article.setAuthor(author);
@@ -115,11 +117,9 @@ public class ArticleController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/article")
-	public String Article(@RequestParam(required = false) Integer id, ModelMap m) {
-		if (id==null) {
-			return "redirect:/";
-		}
+	@GetMapping("/article/{id}")
+	public String Article(@PathVariable("id") int id, ModelMap m) {
+		
 		Article article = articleService.findOne(id);
 		if (article==null) {
 			m.addAttribute("found", false);
@@ -127,7 +127,7 @@ public class ArticleController {
 			m.addAttribute("found", true);
 			m.addAttribute("article", article);
 		}
-		return "user/article";
+		return "detail";
 	}
 	
 }

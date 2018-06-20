@@ -2,17 +2,19 @@ package com.chhaileng.ams.service.role;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chhaileng.ams.entity.Role;
-import com.chhaileng.ams.repository.entitymanager.RoleRepository;
+import com.chhaileng.ams.repository.jparepository.RoleRepository;
 
 @Service
 public class RoleServiceImp implements RoleService {
 
-	@Autowired
 	private RoleRepository roleRepository;
+
+	public RoleServiceImp(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
 	
 	@Override
 	public void save(Role role) {

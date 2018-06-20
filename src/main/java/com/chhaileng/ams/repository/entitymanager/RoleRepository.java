@@ -4,14 +4,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Repository;
 
 import com.chhaileng.ams.entity.Role;
 
-@Repository
-@Transactional
+//@Repository
+//@Transactional
 public class RoleRepository {
 
 	@PersistenceContext

@@ -2,17 +2,19 @@ package com.chhaileng.ams.service.category;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chhaileng.ams.entity.Category;
-import com.chhaileng.ams.repository.entitymanager.CategoryRepository;
+import com.chhaileng.ams.repository.jparepository.CategoryRepository;
 
 @Service
 public class CategoryServiceImp implements CategoryService {
 
-	@Autowired
 	private CategoryRepository categoryRepository;
+
+	public CategoryServiceImp(CategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
+	}
 	
 	@Override
 	public void save(Category category) {

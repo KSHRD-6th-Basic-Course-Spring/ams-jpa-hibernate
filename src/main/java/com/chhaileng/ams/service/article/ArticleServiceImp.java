@@ -2,18 +2,20 @@ package com.chhaileng.ams.service.article;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chhaileng.ams.entity.Article;
-import com.chhaileng.ams.repository.entitymanager.ArticleRepository;
+import com.chhaileng.ams.repository.jparepository.ArticleRepository;
 
 @Service
 public class ArticleServiceImp implements ArticleService {
 	
-	@Autowired
 	private ArticleRepository articleRepository;
 
+	public ArticleServiceImp(ArticleRepository articleRepository) {
+		this.articleRepository = articleRepository;
+	}
+	
 	@Override
 	public void save(Article article) {
 		articleRepository.save(article);
@@ -36,7 +38,11 @@ public class ArticleServiceImp implements ArticleService {
 	
 	@Override
 	public void update(Article article) {
-		articleRepository.update(article);
+		// Entity Manager
+		// articleRepository.update(article);
+		
+		// JPA Repository
+		articleRepository.saveAndFlush(article);
 	}
 	
 }

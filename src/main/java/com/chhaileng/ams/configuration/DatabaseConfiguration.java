@@ -17,6 +17,7 @@ public class DatabaseConfiguration {
 	public DataSource inMemory() {
 		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 		builder.setType(EmbeddedDatabaseType.H2);
+		
 		return builder.build();
 	}
 	
